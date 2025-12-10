@@ -14,9 +14,67 @@
     </nav>
   </aside>
 
-  <!-- CONTENU DE CHAQUE PAGE -->
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
+  <!-- COLONNE DE DROITE (topbar + contenu) -->
+  <div class="main-layout">
 
+    <!-- TOP BAR -->
+    <header class="topbar fade-in">
+      <div class="avatar">{{ initials }}</div>
+
+      <div class="welcome-text">
+        <span class="small-text">Welcome back,</span>
+        <strong>{{ firstName }}</strong>
+      </div>
+    </header>
+
+    <!-- CONTENU -->
+    <main class="content fade-in">
+
+      <!-- MESSAGE DE BIENVENUE -->
+      <div class="welcome-box">
+        Bonjour <strong>{{ firstName }} {{ lastName }}</strong> 👋
+      </div>
+
+      <!-- CARDS STATISTIQUES -->
+      <div class="stats-grid fade-in">
+
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div>
+            <h3>{{ totalEvents }}</h3>
+            <p>Événements créés</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div>
+            <h3>{{ totalParticipants }}</h3>
+            <p>Participants inscrits</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🧑‍💼</div>
+          <div>
+            <h3>{{ totalUsers }}</h3>
+            <p>Utilisateurs ajoutés</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div>
+            <h3>{{ totalRegistrations }}</h3>
+            <p>Inscriptions aux événements</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTENU ROUTER -->
+      <router-outlet></router-outlet>
+
+    </main>
+  </div>
 </div>
