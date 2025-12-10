@@ -1,0 +1,20 @@
+<div class="main-content">
+
+  <div class="back-button-container">
+    <button class="back-btn" routerLink="/dashboard-organizer">
+      <span class="back-icon">←</span>
+      Retour au dashboard
+    </button>
+  </div>
+
+  <h2>Liste des événements</h2>
+
+  <div class="events-grid">
+
+    <div *ngFor="let e of events" class="event-card">
+
+      <a [routerLink]="['/events', e.id]">{{ e.title }}</a>
+
+    </div>
+  </div>
+</div>

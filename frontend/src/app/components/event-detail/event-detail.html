@@ -1,0 +1,80 @@
+<div class="event-details-container" *ngIf="event; else loading">
+
+  <div class="event-details-card">
+
+    <div class="event-header">
+      <h2>Détails de l'événement</h2>
+    </div>
+
+    <!-- Formulaire de modification -->
+    <div *ngIf="editMode; else viewMode" class="edit-form">
+      <h3>Modifier l'événement</h3>
+      <form (ngSubmit)="updateEvent()">
+        <label>Titre :</label>
+        <input type="text" [(ngModel)]="editedEvent.title" name="title" required>
+
+        <label>Description :</label>
+        <textarea [(ngModel)]="editedEvent.description" name="description" required></textarea>
+
+        <label>Date :</label>
+        <input type="date" [(ngModel)]="editedEvent.date" name="date" required>
+
+        <label>Lieu :</label>
+        <input type="text" [(ngModel)]="editedEvent.location" name="location" required>
+
+        <label>Changer l'image :</label>
+        <input type="file" (change)="onFileSelected($event)">
+
+        <button type="submit" class="save-btn">Enregistrer</button>
+        <button type="button" class="cancel-btn" (click)="cancelEdit()">Annuler</button>
+      </form>
+    </div>
+
+    <!-- Mode lecture -->
+    <ng-template #viewMode>
+      <h3 class="event-title">{{ event.title }}</h3>
+
+      <!-- Image uniforme -->
+      <div *ngIf="event.imageUrl" class="event-image-container">
+        <img 
+          [src]="'http://localhost:3001' + event.imageUrl" 
+          alt="Image de l'événement" 
+          class="event-image"
+        >
+      </div>
+
+      <p class="event-description">{{ event.description }}</p>
+
+      <div class="event-info-grid">
+        <div class="info-item">
+          <div class="info-icon">📅</div>
+          <div class="info-content">
+            <span class="info-label">Date</span>
+            <span class="info-value">{{ event.date | date:'shortDate' }}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-content">
+            <span class="info-label">Lieu</span>
+            <span class="info-value">{{ event.location }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-actions">
+        <button class="action-button secondary" routerLink="/events">← Retour aux événements</button>
+        <button class="edit-btn" (click)="editEvent()">Modifier</button>
+        <button class="delete-btn" (click)="deleteEvent()">Supprimer</button>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-state">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Chargement des détails...</p>
+  </div>
+</ng-template>

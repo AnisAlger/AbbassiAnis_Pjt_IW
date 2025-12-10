@@ -1,0 +1,389 @@
+// Variables de design
+$primary-color: #3498db;
+$primary-dark: #2980b9;
+$secondary-color: #2ecc71;
+$accent-color: #9b59b6;
+$text-color: #2c3e50;
+$light-gray: #ecf0f1;
+$border-color: #bdc3c7;
+$error-color: #e74c3c;
+$success-color: #27ae60;
+$box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+// Mixins réutilisables
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card-style {
+  background: white;
+  border-radius: 16px;
+  box-shadow: $box-shadow;
+  overflow: hidden;
+}
+
+@mixin input-style {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid $border-color;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: $transition;
+  background-color: white;
+  font-family: inherit;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  &::placeholder {
+    color: #95a5a6;
+    opacity: 0.8;
+  }
+}
+
+// Styles principaux
+.register-container {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.03"><polygon fill="white" points="0,1000 1000,0 1000,1000"/></svg>');
+    pointer-events: none;
+  }
+}
+
+.register-form {
+  @include card-style;
+  padding: 45px 40px;
+  width: 100%;
+  max-width: 450px;
+  position: relative;
+  z-index: 1;
+  animation: formAppear 0.6s ease-out;
+  
+  h2 {
+    text-align: center;
+    color: $text-color;
+    margin-bottom: 35px;
+    font-size: 32px;
+    font-weight: 700;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 4px;
+      background: linear-gradient(90deg, $primary-color, $accent-color);
+      border-radius: 2px;
+    }
+  }
+}
+
+.form-group {
+  margin-bottom: 24px;
+  position: relative;
+  
+  input, select {
+    @include input-style;
+  }
+  
+  // Style spécifique pour le select
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2395a5a6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 45px;
+    cursor: pointer;
+    
+    &:hover {
+      border-color: darken($border-color, 10%);
+    }
+    
+    option {
+      padding: 10px;
+      font-size: 15px;
+    }
+  }
+}
+
+.register-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, $primary-color, $accent-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(155, 89, 182, 0.3);
+    background: linear-gradient(135deg, $primary-dark, darken($accent-color, 10%));
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+  }
+  
+  &:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  // Effet de vague au survol
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+  }
+  
+  &:hover::after {
+    animation: ripple 1s ease-out;
+  }
+}
+
+// Style pour le bouton de retour
+.back-button-container {
+  margin: 20px 0;
+  animation: slideInFromLeft 0.5s ease-out;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, $primary-color, $accent-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  justify-content: center;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+    background: linear-gradient(135deg, $primary-dark, darken($accent-color, 10%));
+    
+    .back-icon {
+      transform: translateX(-3px);
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  // Effet de vague au survol
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+  }
+  
+  &:hover::after {
+    animation: ripple 1s ease-out;
+  }
+}
+
+.back-icon {
+  font-size: 18px;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Section des rôles avec style amélioré
+.role-section {
+  margin: 25px 0;
+  
+  .role-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// Liens supplémentaires
+.register-links {
+  margin-top: 25px;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid $light-gray;
+  
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: $transition;
+    
+    &:hover {
+      color: $primary-dark;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Animations
+@keyframes formAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .register-container {
+    padding: 15px;
+  }
+  
+  .register-form {
+    padding: 35px 25px;
+    
+    h2 {
+      font-size: 28px;
+    }
+  }
+  
+  .back-button-container {
+    margin: 15px 0;
+  }
+  
+  .back-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+    
+    .back-icon {
+      font-size: 16px;
+    }
+  }
+}
+
+// Mode sombre optionnel
+@media (prefers-color-scheme: dark) {
+  .register-form {
+    background: #2c3e50;
+    
+    h2 {
+      color: $light-gray;
+    }
+  }
+  
+  input, select {
+    background-color: #34495e;
+    border-color: #4a6572;
+    color: white;
+    
+    &:focus {
+      border-color: $primary-color;
+    }
+  }
+  
+  .role-section .role-title {
+    color: $light-gray;
+  }
+  
+  .back-btn {
+    background: linear-gradient(135deg, lighten($primary-color, 10%), lighten($accent-color, 10%));
+    
+    &:hover {
+      background: linear-gradient(135deg, $primary-color, $accent-color);
+    }
+  }
+}
+
+// États de focus améliorés pour l'accessibilité
+input:focus-visible, 
+select:focus-visible, 
+button:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}

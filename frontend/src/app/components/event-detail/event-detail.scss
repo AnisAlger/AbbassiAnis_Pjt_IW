@@ -1,0 +1,280 @@
+/* Container principal */
+.event-details-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+
+  .event-details-card {
+    background-color: var(--card-bg, #fff);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    padding: 2rem;
+    transition: all 0.3s ease;
+
+    .event-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-color, #333);
+      }
+    }
+
+    /* Formulaire édition */
+    .edit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-color, #444);
+      }
+
+      label {
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+        display: block;
+        color: var(--text-color, #555);
+      }
+
+      input[type="text"],
+      input[type="date"],
+      textarea,
+      input[type="file"] {
+        padding: 0.5rem 0.7rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 100%;
+        font-size: 1rem;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+          border-color: #007bff;
+          outline: none;
+        }
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .save-btn,
+      .cancel-btn {
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+
+        &.save-btn {
+          background-color: #007bff;
+          color: #fff;
+
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+
+        &.cancel-btn {
+          background-color: #f0f0f0;
+          color: #333;
+
+          &:hover {
+            background-color: #e0e0e0;
+          }
+        }
+      }
+    }
+
+    /* Mode lecture */
+    .event-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: var(--text-color, #222);
+    }
+
+    .event-image-container {
+      text-align: center;
+      margin-bottom: 1rem;
+
+      .event-image {
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: 10px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .event-description {
+      font-size: 1rem;
+      color: var(--text-color, #555);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .event-info-grid {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .info-icon {
+          font-size: 1.4rem;
+        }
+
+        .info-content {
+          display: flex;
+          flex-direction: column;
+
+          .info-label {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-color, #666);
+          }
+
+          .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color, #333);
+          }
+        }
+      }
+    }
+
+    .event-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+
+      button {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &.action-button.secondary {
+          background-color: #f0f0f0;
+          color: #333;
+
+          &:hover {
+            background-color: #e0e0e0;
+          }
+        }
+
+        &.edit-btn {
+          background-color: #28a745;
+          color: #fff;
+
+          &:hover {
+            background-color: #1e7e34;
+          }
+        }
+
+        &.delete-btn {
+          background-color: #dc3545;
+          color: #fff;
+
+          &:hover {
+            background-color: #b02a37;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Loading state */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f0f0f0;
+    border-top-color: #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  .loading-text {
+    font-size: 1rem;
+    color: var(--text-color, #555);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark mode */
+:host-context(.dark-mode) {
+  --card-bg: #1e1e1e;
+  --text-color: #f0f0f0;
+
+  .event-details-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+    input,
+    textarea {
+      background-color: #2c2c2c;
+      color: #f0f0f0;
+      border: 1px solid #444;
+
+      &:focus {
+        border-color: #66afe9;
+      }
+    }
+
+    .save-btn {
+      background-color: #0d6efd;
+    }
+
+    .cancel-btn {
+      background-color: #444;
+      color: #f0f0f0;
+    }
+
+    .edit-btn {
+      background-color: #198754;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+    }
+
+    .action-button.secondary {
+      background-color: #333;
+      color: #f0f0f0;
+    }
+  }
+
+  .loading-spinner {
+    border: 5px solid #444;
+    border-top-color: #0d6efd;
+  }
+}

@@ -1,0 +1,22 @@
+<div class="dashboard-container">
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h2>Organisateur</h2>
+
+    <nav>
+      <a routerLink="/events" routerLinkActive="active"> Liste des événements</a>
+      <a routerLink="/event-form" routerLinkActive="active"> Créer un événement</a>
+      <a routerLink="/register" routerLinkActive="active"> Ajouter Des Utilisateurs</a>
+      <a routerLink="/participants" routerLinkActive="active"> Voir les Participants</a>
+
+      <button class="logout-btn" (click)="logout()"> Déconnexion</button>
+    </nav>
+  </aside>
+
+  <!-- CONTENU DE CHAQUE PAGE -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

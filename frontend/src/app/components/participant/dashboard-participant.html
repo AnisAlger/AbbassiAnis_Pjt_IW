@@ -1,0 +1,61 @@
+<h2>Liste des événements disponibles</h2>
+<table border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Titre</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Lieu</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of events">
+      <td>
+        <div class="event-image-container">
+          <img *ngIf="e.imageUrl" [src]="'http://localhost:3001' + e.imageUrl" alt="Image">
+          <div *ngIf="!e.imageUrl" class="placeholder">No Image</div>
+        </div>
+      </td>
+      <td>{{ e.title }}</td>
+      <td>{{ e.description }}</td>
+      <td>{{ e.date | date:'shortDate' }}</td>
+      <td>{{ e.location }}</td>
+      <td>
+        <button (click)="affect(e.id)">S’inscrire</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Mes inscriptions</h2>
+<table *ngIf="myRegistrations.length > 0" border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Événement</th>
+      <th>Image</th>
+      <th>Nom et Prénom</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of myRegistrations">
+      <td>{{ getEventTitle(r.eventId) }}</td>
+      <td>
+        <div class="event-image-container">
+          <img *ngIf="getEventImage(r.eventId)" [src]="'http://localhost:3001' + getEventImage(r.eventId)" alt="Image">
+          <div *ngIf="!getEventImage(r.eventId)" class="placeholder">No Image</div>
+        </div>
+      </td>
+      <td>{{ r.firstName }} {{ r.lastName }}</td>
+      <td>{{ r.email }}</td>
+      <td>
+        <button (click)="unsubscribe(r.id)">Se désinscrire</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="logout-btn" (click)="logout()"> Déconnexion</button>

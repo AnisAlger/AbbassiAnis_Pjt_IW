@@ -1,0 +1,42 @@
+<div class="event-create-container">
+  <form class="event-form">
+    <div class="form-header">
+      <span class="header-icon">🎉</span>
+      <h2>Créer un événement</h2>
+    </div>
+    
+    <div class="form-group">
+      <input type="text" [(ngModel)]="event.title" placeholder="Titre de l'événement" name="title">
+    </div>
+    
+    <div class="form-group">
+      <textarea [(ngModel)]="event.description" placeholder="Description de l'événement..." name="description"></textarea>
+    </div>
+    
+    <div class="form-grid">
+      <div class="form-group">
+        <input type="date" [(ngModel)]="event.date" name="date">
+      </div>
+      
+      <div class="form-group">
+        <input type="text" [(ngModel)]="event.location" placeholder="Lieu" name="location">
+      </div>
+
+      <div class="form-group">
+       <label for="image">Image de l'événement :</label>
+       <input type="file" id="image" (change)="onFileSelected($event)">
+      </div>
+
+    </div>
+
+    <button type="button" (click)="createEvent()" class="create-button">
+      Créer l'événement
+    </button>
+       <div class="back-button-container">
+         <button type="button" class="back-btn" routerLink="/dashboard-organizer">
+         <span class="back-icon">←</span>
+             Retour au dashboard
+         </button>
+       </div>
+  </form>
+</div>

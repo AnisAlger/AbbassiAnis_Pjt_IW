@@ -1,0 +1,116 @@
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+// Sidebar
+.sidebar {
+  width: 280px;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  padding: 2rem 1.5rem;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+  }
+  
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    color: #ecf0f1;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    
+    &:hover {
+      background: rgba(52, 152, 219, 0.2);
+      transform: translateX(5px);
+    }
+    
+    // Style pour le lien actif
+    &.active {
+      background: #3498db;
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+  }
+  
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center; // ← Ajouter cette ligne pour centrer le contenu
+    gap: 0.75rem;
+    width: 50%;
+    padding: 1rem 1.25rem;
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border: 2px solid rgba(231, 76, 60, 0.3);
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1rem auto; // ← Changer margin-top en margin pour centrer horizontalement
+    // padding-left: 100px; ← Supprimer cette ligne qui décalait le texte
+    
+    &:hover {
+        background: rgba(231, 76, 60, 0.2);
+        border-color: rgba(231, 76, 60, 0.5);
+        transform: translateX(5px);
+    }
+  }
+}
+
+// Contenu principal
+.content {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    padding: 1rem;
+    
+    nav {
+      flex-direction: row;
+      overflow-x: auto;
+      gap: 0.5rem;
+    }
+    
+    a {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    
+    .logout-btn {
+      margin-top: 0;
+      flex-shrink: 0;
+    }
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+}

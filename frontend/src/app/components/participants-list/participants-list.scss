@@ -1,0 +1,306 @@
+// Variables
+$primary-color: #2c3e50;
+$secondary-color: #3498db;
+$accent-color: #e74c3c;
+$background-color: #f8f9fa;
+$text-color: #333;
+$border-color: #e1e8ed;
+$table-header-bg: #34495e;
+$table-hover-bg: #f8f9fa;
+$shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+
+// Conteneur principal
+:host {
+  display: block;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+// Titre principal
+h2 {
+  color: $primary-color;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, $secondary-color, $accent-color);
+    border-radius: 2px;
+  }
+}
+
+// Tableau
+table {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: $shadow;
+  background: white;
+  border: none;
+  
+  // En-tête du tableau
+  thead {
+    background: linear-gradient(135deg, $table-header-bg 0%, darken($table-header-bg, 5%) 100%);
+    
+    tr {
+      th {
+        color: white;
+        padding: 1.25rem 1rem;
+        font-weight: 600;
+        font-size: 1rem;
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+        position: relative;
+        
+        &:not(:last-child)::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 25%;
+          height: 50%;
+          width: 1px;
+          background: rgba(255, 255, 255, 0.3);
+        }
+      }
+    }
+  }
+  
+  // Corps du tableau
+  tbody {
+    tr {
+      transition: all 0.3s ease;
+      border-bottom: 1px solid lighten($border-color, 5%);
+      
+      &:nth-child(even) {
+        background-color: lighten($table-hover-bg, 1%);
+      }
+      
+      &:hover {
+        background-color: lighten($secondary-color, 45%);
+        transform: scale(1.01);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      td {
+        padding: 1.25rem 1rem;
+        color: $text-color;
+        font-size: 0.95rem;
+        border: none;
+        transition: color 0.3s ease;
+        
+        // Style pour la première colonne (Nom)
+        &:first-child {
+          font-weight: 600;
+          color: $primary-color;
+        }
+        
+        // Style pour la colonne Email
+        &:nth-child(2) {
+          color: $secondary-color;
+        }
+        
+        // Style pour la colonne ID Événement
+        &:last-child {
+          font-family: 'Courier New', monospace;
+          font-size: 0.9rem;
+          color: lighten($text-color, 20%);
+        }
+      }
+    }
+  }
+}
+
+// Message quand aucun participant
+p {
+  text-align: center;
+  color: lighten($text-color, 30%);
+  font-style: italic;
+  font-size: 1.1rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 2rem auto;
+  box-shadow: $shadow;
+  border: 2px dashed $border-color;
+}
+
+// Animation d'apparition des lignes
+@keyframes fadeInRow {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+tbody tr {
+  animation: fadeInRow 0.5s ease-out;
+  
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  :host {
+    padding: 1rem;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  table {
+    font-size: 0.9rem;
+    
+    thead {
+      display: none; // Cache l'en-tête sur mobile
+    }
+    
+    tbody {
+      tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid $border-color;
+        border-radius: 8px;
+        padding: 1rem;
+        background: white;
+        
+        td {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.75rem 0.5rem;
+          border-bottom: 1px solid lighten($border-color, 5%);
+          
+          &:last-child {
+            border-bottom: none;
+          }
+          
+          // Ajout des labels pour mobile
+          &::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: $primary-color;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-right: 1rem;
+          }
+        }
+        
+        // Supprime l'effet de scale sur mobile
+        &:hover {
+          transform: none;
+        }
+      }
+    }
+  }
+  
+  // Ajout des data-labels pour mobile (à ajouter dans le HTML si nécessaire)
+  // <td data-label="Nom">{{ p.name }}</td>
+  // <td data-label="Email">{{ p.email }}</td>
+  // <td data-label="ID Événement">{{ p.eventId }}</td>
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  table tbody tr td {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    
+    &::before {
+      margin-right: 0;
+    }
+  }
+  
+  p {
+    padding: 2rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+// Mode sombre optionnel
+@media (prefers-color-scheme: dark) {
+  :host {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+  
+  h2 {
+    color: #ecf0f1;
+  }
+  
+  table {
+    background: #34495e;
+    color: #ecf0f1;
+    
+    thead {
+      background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+    }
+    
+    tbody tr {
+      border-color: #4a5f7a;
+      
+      &:nth-child(even) {
+        background-color: #2c3e50;
+      }
+      
+      &:hover {
+        background-color: #3498db;
+      }
+      
+      td {
+        color: #ecf0f1;
+        
+        &:first-child {
+          color: #ecf0f1;
+        }
+        
+        &:nth-child(2) {
+          color: #3498db;
+        }
+        
+        &:last-child {
+          color: #bdc3c7;
+        }
+      }
+    }
+  }
+  
+  p {
+    background: #34495e;
+    color: #bdc3c7;
+    border-color: #4a5f7a;
+  }
+}
