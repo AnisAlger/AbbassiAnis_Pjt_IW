@@ -1,277 +1,138 @@
-// Variables pour une cohérence globale
-$primary-color: #3498db;
-$primary-dark: #2980b9;
-$secondary-color: #2ecc71;
-$text-color: #2c3e50;
-$light-gray: #ecf0f1;
-$border-color: #bdc3c7;
-$error-color: #e74c3c;
-$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-$transition: all 0.3s ease;
-
-// Mixins pour la réutilisation
-@mixin flex-center {
+/* Container principal */
+.login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-@mixin input-style {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid $border-color;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: $transition;
-  background-color: white;
-  
-  &:focus {
-    outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-  }
-  
-  &::placeholder {
-    color: #95a5a6;
-  }
-}
-
-// Styles principaux
-.login-container {
-  @include flex-center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  font-family: 'Roboto', sans-serif;
+  padding: 20px; /* Pour éviter débordement sur mobile */
+  box-sizing: border-box;
 }
 
-.login-form {
-  background: white;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: $box-shadow, 0 10px 30px rgba(0, 0, 0, 0.2);
+/* Carte du formulaire */
+.login-card {
+  background-color: #fff;
+  padding: 60px 30px 30px;
+  border-radius: 15px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
   width: 100%;
-  max-width: 400px;
-  animation: slideUp 0.5s ease-out;
-  
-  h2 {
-    text-align: center;
-    color: $text-color;
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 600;
-    position: relative;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50px;
-      height: 3px;
-      background: linear-gradient(90deg, $primary-color, $secondary-color);
-      border-radius: 2px;
-    }
-  }
-}
-
-.form-group {
-  margin-bottom: 24px;
+  max-width: 380px;  /* largeur maximale */
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
   position: relative;
-  
-  label {
-    display: block;
-    margin-bottom: 8px;
-    color: $text-color;
-    font-weight: 500;
-    font-size: 14px;
-  }
-  
-  input {
-    @include input-style;
-    
-    &.ng-invalid.ng-touched {
-      border-color: $error-color;
-      
-      &:focus {
-        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
-      }
-    }
-  }
-  
-  // Icônes optionnelles (si vous voulez en ajouter plus tard)
-  &.has-icon {
-    position: relative;
-    
-    input {
-      padding-left: 40px;
-    }
-    
-    .input-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #95a5a6;
-      font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Avatar centré au-dessus */
+.avatar {
+  width: 80px;
+  height: 80px;
+  background: #2575fc;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 36px;
+  margin: -60px auto 20px;
+  box-shadow: 0 5px 15px rgba(37, 117, 252, 0.5);
+  animation: bounce 1.2s infinite;
+}
+
+/* Titre */
+h2 {
+  margin-bottom: 30px;
+  font-size: 26px;
+  color: #333;
+}
+
+/* Champs du formulaire */
+.form-group {
+  margin-bottom: 20px;
+
+  .form-input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: all 0.3s;
+    box-sizing: border-box; /* Important pour ne pas dépasser la carte */
+
+    &:focus {
+      border-color: #2575fc;
+      box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+      outline: none;
     }
   }
 }
 
+/* Bouton */
 .login-button {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, $primary-color, $primary-dark);
-  color: white;
+  padding: 12px;
+  background-color: #2575fc;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  color: #fff;
   font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  transition: $transition;
-  position: relative;
-  overflow: hidden;
-  
+  transition: all 0.3s;
+  box-sizing: border-box;
+
   &:hover {
+    background-color: #145ecd;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
-  }
-  
-  &:active {
-    transform: translateY(0);
-  }
-  
-  &:disabled {
-    background: #bdc3c7;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-  
-  // Effet de chargement
-  &.loading {
-    color: transparent;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      top: 50%;
-      left: 50%;
-      margin-left: -10px;
-      margin-top: -10px;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: spin 0.8s ease infinite;
-    }
+    box-shadow: 0 5px 15px rgba(37,117,252,0.4);
   }
 }
 
-// États de validation
-.validation-message {
-  font-size: 12px;
-  margin-top: 6px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  
-  &.error {
-    color: $error-color;
-    background-color: rgba(231, 76, 60, 0.1);
-  }
-  
-  &.success {
-    color: $secondary-color;
-    background-color: rgba(46, 204, 113, 0.1);
-  }
-}
-
-// Liens supplémentaires (optionnels)
-.login-links {
-  margin-top: 20px;
-  text-align: center;
-  
-  a {
-    color: $primary-color;
-    text-decoration: none;
-    font-size: 14px;
-    transition: $transition;
-    
-    &:hover {
-      color: $primary-dark;
-      text-decoration: underline;
-    }
-  }
-  
-  .separator {
-    margin: 0 10px;
-    color: $border-color;
-  }
-}
-
-// Animations
-@keyframes slideUp {
-  from {
+/* Animations */
+@keyframes fadeIn {
+  0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(-15px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
   }
-  100% {
-    transform: rotate(360deg);
+  50% {
+    transform: translateY(-10px);
   }
 }
 
-// Responsive design
+/* Responsive */
 @media (max-width: 480px) {
-  .login-container {
-    padding: 15px;
+  .login-card {
+    padding: 70px 20px 30px;
   }
-  
-  .login-form {
-    padding: 30px 20px;
-    
-    h2 {
-      font-size: 24px;
-    }
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-}
 
-// Mode sombre optionnel
-@media (prefers-color-scheme: dark) {
-  .login-form {
-    background: #2c3e50;
-    
-    h2 {
-      color: $light-gray;
-    }
+  h2 {
+    font-size: 22px;
   }
-  
-  .form-group label {
-    color: $light-gray;
+
+  .form-input {
+    font-size: 14px;
   }
-  
-  input {
-    background-color: #34495e;
-    border-color: #4a6572;
-    color: white;
-    
-    &:focus {
-      border-color: $primary-color;
-    }
+
+  .login-button {
+    font-size: 14px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    margin-top: -50px;
+    margin-bottom: 15px;
   }
 }
