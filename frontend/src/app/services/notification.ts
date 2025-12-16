@@ -22,6 +22,12 @@ export class NotificationService {
     return this.http.get<Notification[]>(`${this.apiUrl}/me`, { headers });
   }
 
+  sendNotification(userId: string, message: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(this.apiUrl, { userId, message }, { headers });
+  }
+
   markAsRead(notificationId: string) {
     const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

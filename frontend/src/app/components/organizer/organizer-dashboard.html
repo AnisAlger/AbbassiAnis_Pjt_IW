@@ -91,10 +91,10 @@
               <button class="action-btn" routerLink="/register">
                 <span class="icon">👤</span> Ajouter Utilisateur
               </button>
-              <button class="action-btn">
+              <button class="action-btn" (click)="exportData()">
                 <span class="icon">📥</span> Exporter Données
               </button>
-              <button class="action-btn">
+              <button class="action-btn" (click)="openAnnouncementModal()">
                 <span class="icon">📢</span> Envoyer Annonce
               </button>
             </div>
@@ -148,6 +148,24 @@
 
       <!-- CONTENU ROUTER -->
       <router-outlet></router-outlet>
+
+      <!-- MODAL ANNONCE -->
+      <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <h2>📣 Nouvelle Annonce</h2>
+          <p>Envoyez un message instantané à tous les utilisateurs enregistrés.</p>
+
+          <textarea [(ngModel)]="announcementMessage" placeholder="Rédigez votre message ici..."></textarea>
+
+          <div class="modal-actions">
+            <button class="cancel-btn" (click)="closeModal()" [disabled]="sending">Annuler</button>
+            <button class="send-btn" (click)="sendAnnouncement()" [disabled]="sending">
+              <span *ngIf="!sending">Envoyer</span>
+              <span *ngIf="sending">Envoi...</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
     </main>
   </div>

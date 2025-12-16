@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EventService } from '../../services/event';
 import { ParticipantService } from '../../services/participant';
 import { Chart, registerables } from 'chart.js';
 import { NavbarComponent } from '../navbar/navbar';
+import { NotificationService } from '../../services/notification';
 
 Chart.register(...registerables);
 
@@ -16,7 +18,8 @@ Chart.register(...registerables);
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    NavbarComponent
+    NavbarComponent,
+    FormsModule
   ],
   templateUrl: './organizer-dashboard.html',
   styleUrls: ['./organizer-dashboard.scss']
@@ -32,10 +35,21 @@ export class OrganizerDashboard implements OnInit {
   totalUsers = 0;
   totalRegistrations = 0;
 
+  recentActivities: any[] = [];
+  registrations: any[] = [];
+  chart: any;
+
+  // Announcement Modal State
+  showModal = false;
+  announcementMessage = '';
+  usersList: any[] = [];
+  sending = false;
+
   constructor(
     private router: Router,
     private eventService: EventService,
-    private participantService: ParticipantService
+    private participantService: ParticipantService,
+    private notifService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -47,11 +61,6 @@ export class OrganizerDashboard implements OnInit {
     // Chargement des stats réelles
     this.loadStats();
   }
-
-  recentActivities: any[] = [];
-  chart: any;
-
-  // ... constructor ...
 
   loadStats() {
     // 1. Total Evenements
@@ -66,15 +75,15 @@ export class OrganizerDashboard implements OnInit {
     // 2./3. Participants & Users & Activity
     this.participantService.getAllParticipants().subscribe({
       next: (registrations: any[]) => {
+        this.registrations = registrations;
         this.totalRegistrations = registrations.length;
         this.totalParticipants = new Set(registrations.map(r => r.userId)).size;
 
         // Mock Recent Activity from registrations (taking last 5)
-        // Assuming registration has some ID or we just take top 5 if API returns sorted
         this.recentActivities = registrations.slice(-5).reverse().map(r => ({
           type: 'inscription',
           message: `${r.firstName} ${r.lastName} s'est inscrit à ${r.eventTitle}`,
-          time: 'Récemment' // No date in current endpoint result shown previously
+          time: 'Récemment'
         }));
 
         this.updateChartData();
@@ -85,6 +94,7 @@ export class OrganizerDashboard implements OnInit {
     this.participantService.getAllUsersParticipants().subscribe({
       next: (users: any[]) => {
         this.totalUsers = users.length;
+        this.usersList = users;
         this.updateChartData();
       }
     });
@@ -105,7 +115,6 @@ export class OrganizerDashboard implements OnInit {
   }
 
   initChart() {
-    // Ensure element exists (simple check or timeout)
     const ctx = document.getElementById('dashboardChart') as HTMLCanvasElement;
     if (!ctx) return;
 
@@ -138,6 +147,81 @@ export class OrganizerDashboard implements OnInit {
         }
       }
     });
+  }
+
+
+
+  exportData() {
+    if (this.registrations.length === 0) {
+      alert('Aucune donnée à exporter.');
+      return;
+    }
+
+    let csvContent = 'data:text/csv;charset=utf-8,';
+    csvContent += 'ID,Nom,Prenom,Email,Evenement,Date Inscription\n';
+
+    this.registrations.forEach(row => {
+      const dataString = [
+        row.id,
+        row.lastName,
+        row.firstName,
+        row.email,
+        row.eventTitle,
+        row.registrationDate
+      ].join(',');
+      csvContent += dataString + '\n';
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'inscriptions_export.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  openAnnouncementModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.announcementMessage = '';
+  }
+
+  sendAnnouncement() {
+    if (!this.announcementMessage.trim()) return;
+    this.sending = true;
+
+    // Broadcast to ALL users
+    let completed = 0;
+    const total = this.usersList.length;
+
+    if (total === 0) {
+      alert('Aucun utilisateur trouvé.');
+      this.sending = false;
+      return;
+    }
+
+    this.usersList.forEach(user => {
+      this.notifService.sendNotification(user.id, this.announcementMessage).subscribe({
+        next: () => {
+          completed++;
+          if (completed === total) this.finishSending();
+        },
+        error: () => {
+          completed++;
+          if (completed === total) this.finishSending();
+        }
+      });
+    });
+  }
+
+  finishSending() {
+    this.sending = false;
+    alert('Annonce envoyée avec succès !');
+    this.closeModal();
   }
 
   logout() {
