@@ -36,7 +36,7 @@ export class NavbarComponent {
     });
 
     // Rafraîchissement toutes les 10s si navbar visible
-    interval(10000).subscribe(() => {
+    interval(5000).subscribe(() => {
       if (this.showNavbar) this.loadNotifications();
     });
   }
