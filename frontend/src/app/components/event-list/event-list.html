@@ -1,20 +1,38 @@
-<div class="main-content">
-
-  <div class="back-button-container">
+<app-navbar></app-navbar>
+<div class="page-container fade-in">
+  <div class="actions-bar">
     <button class="back-btn" routerLink="/dashboard-organizer">
-      <span class="back-icon">←</span>
-      Retour au dashboard
+      <span class="icon">←</span> Retour au Dashboard
     </button>
   </div>
 
-  <h2>Liste des événements</h2>
+  <div class="header-section">
+    <h2>📅 Explorez les Événements</h2>
+    <p class="subtitle">Découvrez de nouvelles opportunités et rejoignez la communauté.</p>
+  </div>
 
   <div class="events-grid">
+    <div *ngFor="let e of events" class="event-card" [routerLink]="['/events', e.id]">
+      <div class="card-image-wrapper">
+        <img *ngIf="e.imageUrl" [src]="'http://localhost:8080/api/uploads' + e.imageUrl.replace('/uploads', '')"
+          alt="{{e.title}}" class="card-img">
+        <div *ngIf="!e.imageUrl" class="placeholder-img">
+          <span>{{ e.title.charAt(0) }}</span>
+        </div>
+        <div class="date-badge">
+          <span class="day">{{ e.date | date:'dd' }}</span>
+          <span class="month">{{ e.date | date:'MMM' }}</span>
+        </div>
+      </div>
 
-    <div *ngFor="let e of events" class="event-card">
-
-      <a [routerLink]="['/events', e.id]">{{ e.title }}</a>
-
+      <div class="card-content">
+        <h3 class="title">{{ e.title }}</h3>
+        <p class="location">📍 {{ e.location }}</p>
+        <p class="description">{{ e.description }}</p>
+        <div class="card-footer">
+          <span class="read-more">Voir les détails →</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { EventService } from '../../services/event';
 import { ParticipantService } from '../../services/participant';
 
+import { NavbarComponent } from '../navbar/navbar';
+
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NavbarComponent],
   templateUrl: './event-list.html',
   styleUrls: ['./event-list.scss']
 })
@@ -22,7 +24,7 @@ export class EventList {
     private eventService: EventService,
     private participantService: ParticipantService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.userId = localStorage.getItem('userId') || '';
@@ -44,5 +46,5 @@ export class EventList {
     this.eventService.getAll().subscribe(res => {
       this.events = res;
     });
-  }  
+  }
 }
