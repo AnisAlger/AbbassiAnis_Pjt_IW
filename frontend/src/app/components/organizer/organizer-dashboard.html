@@ -65,6 +65,87 @@
 
       </div>
 
+      <!-- MAIN DASHBOARD GRID -->
+      <div class="dashboard-grid">
+
+        <!-- LEFT COLUMN -->
+        <div class="main-column">
+
+          <!-- CHART SECTION -->
+          <div class="chart-card">
+            <div class="card-header">
+              <h3>📈 Aperçu des Statistiques</h3>
+            </div>
+            <div class="chart-container">
+              <canvas id="dashboardChart"></canvas>
+            </div>
+          </div>
+
+          <!-- QUICK ACTIONS -->
+          <div class="quick-actions">
+            <h3>Actions Rapides</h3>
+            <div class="actions-row">
+              <button class="action-btn" routerLink="/event-form">
+                <span class="icon">➕</span> Créer Événement
+              </button>
+              <button class="action-btn" routerLink="/register">
+                <span class="icon">👤</span> Ajouter Utilisateur
+              </button>
+              <button class="action-btn">
+                <span class="icon">📥</span> Exporter Données
+              </button>
+              <button class="action-btn">
+                <span class="icon">📢</span> Envoyer Annonce
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="side-column">
+
+          <!-- RECENT ACTIVITY -->
+          <div class="activity-card">
+            <h3>Activités Récentes</h3>
+            <div class="activity-list">
+              <div *ngFor="let act of recentActivities" class="activity-item">
+                <div class="act-icon">📝</div>
+                <div class="act-content">
+                  <p>{{ act.message }}</p>
+                  <span class="time">{{ act.time }}</span>
+                </div>
+              </div>
+              <div *ngIf="recentActivities.length === 0" class="empty-act">
+                Aucune activité récente.
+              </div>
+            </div>
+          </div>
+
+          <!-- MINI CALENDAR -->
+          <div class="calendar-card">
+            <h3>Décembre 2025</h3>
+            <div class="mini-calendar">
+              <!-- Simple visual mock for UI -->
+              <div class="cal-header">
+                <span>Lu</span><span>Ma</span><span>Me</span><span>Je</span><span>Ve</span><span>Sa</span><span>Di</span>
+              </div>
+              <div class="cal-grid">
+                <span class="muted">29</span><span
+                  class="muted">30</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                <span>13</span><span>14</span><span
+                  class="today">15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span class="muted">1</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
       <!-- CONTENU ROUTER -->
       <router-outlet></router-outlet>
 
