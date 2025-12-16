@@ -1,0 +1,7 @@
+C:\Users\ISSER TECH\Desktop\Projets\event-management-project1\event-app-microservices\auth-service\src\main\java\com\example\authservice\AuthServiceApplication.java
+C:\Users\ISSER TECH\Desktop\Projets\event-management-project1\event-app-microservices\auth-service\src\main\java\com\example\authservice\controller\AuthController.java
+C:\Users\ISSER TECH\Desktop\Projets\event-management-project1\event-app-microservices\auth-service\src\main\java\com\example\authservice\repository\UserRepository.java
+C:\Users\ISSER TECH\Desktop\Projets\event-management-project1\event-app-microservices\auth-service\src\main\java\com\example\authservice\model\User.java
+C:\Users\ISSER TECH\Desktop\Projets\event-management-project1\event-app-microservices\auth-service\src\main\java\com\example\authservice\utils\JwtUtil.java
+C:\Users\ISSER TECH\Desktop\Projets\event-management-project1\event-app-microservices\auth-service\src\main\java\com\example\authservice\service\AuthService.java
+C:\Users\ISSER TECH\Desktop\Projets\event-management-project1\event-app-microservices\auth-service\src\main\java\com\example\authservice\config\SecurityConfig.java

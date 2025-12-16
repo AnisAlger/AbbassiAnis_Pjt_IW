@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+
+<div class="page-container fade-in">
+    <div class="header-section">
+        <h2>🎟️ Mes Inscriptions</h2>
+        <p class="subtitle">Retrouvez ici tous les événements auxquels vous participez.</p>
+    </div>
+
+    <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Chargement de vos inscriptions...</p>
+    </div>
+
+    <div *ngIf="!loading && myRegistrations.length === 0" class="empty-state">
+        <div class="empty-icon">📅</div>
+        <h3>Aucune inscription</h3>
+        <p>Vous n'êtes inscrit à aucun événement pour le moment.</p>
+        <button routerLink="/dashboard-participant" class="browse-btn">Parcourir les événements</button>
+    </div>
+
+    <div class="registrations-grid" *ngIf="!loading && myRegistrations.length > 0">
+        <!-- Card Style for Registrations -->
+        <div class="registration-card" *ngFor="let reg of myRegistrations">
+            <div class="card-status status-active">Inscrit</div>
+
+            <div class="card-content">
+                <h3 class="event-title">{{ reg.eventTitle }}</h3>
+
+                <div class="info-row">
+                    <span class="label">Participant:</span>
+                    <span class="value">{{ reg.firstName }} {{ reg.lastName }}</span>
+                </div>
+
+                <!-- If we had date/location here it would be great, but participant object might only have basic info.
+             Ideally we fetch event details or the participant inner join has it. 
+             Based on previous files, participant object has { id, eventTitle, firstName... } 
+        -->
+
+            </div>
+
+            <div class="card-actions">
+                <!-- Optional: View details if we can link back to event -->
+                <!-- <button class="btn btn-outline" [routerLink]="['/events', reg.eventId]">Voir l'événement</button> -->
+
+                <button class="btn btn-danger" (click)="unregister(reg.id)">
+                    Se désinscrire
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

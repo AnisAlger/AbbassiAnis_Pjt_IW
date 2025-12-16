@@ -1,86 +1,275 @@
-/* === NAVBAR PRINCIPALE === */
+@import '../../../styles.scss';
+
 .navbar {
-  width: 100%;
-  background-color: #1976d2;
-  color: white;
-  padding: 10px 20px;
+  /* Use global variables */
+  background: var(--card-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  /* Subtle separator */
+  color: var(--text-color);
+  padding: 0.8rem 2rem;
 
+  /* Flex layout */
   display: flex;
-  justify-content: space-between; /* Changez en space-between */
+  justify-content: space-between;
+  /* Space between Nav and Notifs */
   align-items: center;
+  gap: 1.5rem;
 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  font-family: Arial, sans-serif;
+  .nav-menu {
+    flex: 1;
+    /* Take up space */
 
-  position: relative;
-  z-index: 999;
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      padding-left: 20px;
+
+      li a {
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+
+        &:hover,
+        &.active {
+          color: var(--primary-color, #3b82f6);
+        }
+      }
+    }
+  }
+
+  position: fixed;
+  /* Stick to top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  box-shadow: var(--shadow-sm);
+  height: 70px;
+  /* Fixed height for consistency */
 }
 
-/* === ICON NOTIFICATION === */
-.notif-icon {
-  cursor: pointer;
-  font-size: 24px;
-  position: relative; /* Position relative pour le conteneur */
-  display: inline-flex;
+/* Notification Container (Relative for dropdown) */
+.notif-container {
+  margin-left: auto;
+  /* Push to the right even if nav-menu is missing */
+  position: relative;
+  display: flex;
   align-items: center;
+}
 
-  .notif-count {
-    position: absolute;
-    top: -5px;
-    right: -10px;
-    background: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 0.75rem;
-    font-weight: bold;
+/* Backdrop for closing menu */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1001;
+  /* Behind dropdown (1002) */
+  background: transparent;
+  cursor: default;
+}
+
+/* Icon Wrapper */
+.notif-icon-wrapper {
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  z-index: 1002;
+  /* Above backdrop */
+
+  &:hover {
+    background-color: rgba(79, 70, 229, 0.1);
+    /* Light primary tint */
+  }
+
+  .bell-icon {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    transition: color var(--transition-speed);
+  }
+
+  &:hover .bell-icon {
+    color: var(--primary-color);
+  }
+}
+
+/* Badge */
+.notif-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: var(--danger-color);
+  color: white;
+  border-radius: 99px;
+  padding: 0 5px;
+  min-width: 18px;
+  height: 18px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--card-bg);
+  /* White border for contrast */
+}
+
+/* Dropdown Menu */
+.notif-dropdown {
+  position: absolute;
+  top: 130%;
+  /* Below the icon with small gap */
+  right: -10px;
+  /* Align right edge */
+  width: 320px;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  z-index: 1002;
+  /* Above backdrop */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: slideDown 0.2s ease-out;
+  transform-origin: top right;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Dropdown Header */
+.dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafb;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+  }
+}
+
+/* List */
+.notif-list-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Empty State */
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  i {
+    font-size: 2rem;
+    color: #cbd5e1;
+    font-style: normal;
+  }
+}
+
+/* Notification Item */
+.notif-item {
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  display: flex;
+  gap: 12px;
+  align-items: start;
+
+  &:last-child {
+    border-bottom: none;
   }
 
   &:hover {
-    opacity: 0.8;
+    background-color: #f8fafc;
+  }
+
+  &.unread {
+    background-color: #eff6ff;
+    /* Very light blue */
+
+    &:hover {
+      background-color: #dbeafe;
+    }
+
+    .notif-text {
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .indicator-new {
+      display: block;
+    }
+  }
+
+  /* Icon inside notification */
+  .item-icon {
+    min-width: 32px;
+    height: 32px;
+    background: #e0e7ff;
+    color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
   }
 }
 
-/* === LISTE DES NOTIFICATIONS === */
-.notif-list {
-  position: absolute;
-  top: calc(100% + 5px); /* En dessous de la navbar */
-  left: 20px; /* Commence au padding gauche de la navbar */
+.notif-content-wrapper {
+  flex: 1;
+}
 
-  background: #fff;
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+.notif-text {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
 
-  width: 260px;
-  max-height: 300px;
-  overflow-y: auto;
+.notif-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
 
-  padding: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-
-  z-index: 9999 !important;
-
-  p {
-    margin: 8px 0;
-    padding: 6px 5px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    &.unread {
-      font-weight: bold;
-      color: #222;
-      background: #f4f7ff;
-    }
-
-    small {
-      color: #777;
-      font-size: 0.75rem;
-    }
-  }
+.indicator-new {
+  display: none;
+  width: 8px;
+  height: 8px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  margin-top: 6px;
 }

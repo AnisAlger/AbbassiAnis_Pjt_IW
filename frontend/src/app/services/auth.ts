@@ -4,9 +4,9 @@ import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:3001/auth';
+  private apiUrl = 'http://localhost:8080/api/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // login: the backend now returns { token: "...", user: { id, email, firstName, lastName, role } }
   login(data: any): Observable<any> {

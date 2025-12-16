@@ -1,145 +1,300 @@
-/* ======= CONTENEUR GLOBAL ======= */
+/* Global Container overrides */
 :host {
   display: block;
-  padding: 30px;
-  background: #f5f7fa;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  /* Light background */
 }
 
-/* ======= TITRE ======= */
-h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 25px;
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 100px;
+  /* Space for fixed navbar (70px + spacing) */
+}
+
+/* Header Section */
+.header-section {
   text-align: center;
-  letter-spacing: 0.5px;
+  margin-bottom: 3rem;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    /* From global style */
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
 }
 
-/* ======= TABLE ======= */
+/* Table Container */
+.table-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  /* Global shadow */
+  overflow-x: auto;
+  /* Responsive scroll */
+  border: 1px solid #e2e8f0;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
-  animation: fadeIn 0.6s ease;
+  min-width: 800px;
+  /* Ensure table doesn't squash too much */
+
+  thead {
+    background: #f1f5f9;
+
+    th {
+      text-align: left;
+      padding: 1rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background-color 0.2s;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #f8fafc;
+      }
+    }
+
+    td {
+      padding: 1rem 1.5rem;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      vertical-align: middle;
+    }
+  }
 }
 
-/* HEADER */
-thead {
-  background: linear-gradient(135deg, #004aad, #007bff);
-  color: white;
+/* User Info Cell */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .name {
+    font-weight: 600;
+    color: var(--text-color);
+  }
 }
 
-thead th {
-  padding: 14px;
-  font-size: 15px;
+/* Badges */
+.role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 0.75rem;
   font-weight: 600;
-  text-align: left;
-  letter-spacing: 0.4px;
+
+  &.organizer {
+    background-color: #eff6ff;
+    color: var(--primary-color);
+    border: 1px solid #bfdbfe;
+  }
+
+  &.user {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+  }
 }
 
-/* BODY */
-tbody tr {
-  transition: 0.2s ease;
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  &.active {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+
+  &.inactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
 }
 
-tbody tr:nth-child(even) {
-  background: #f9fbff;
+.id-cell {
+  font-family: monospace;
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
-tbody tr:hover {
-  background: #e8f1ff;
-  transform: scale(1.005);
+/* Event Tags */
+.event-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-tbody td {
-  padding: 14px;
-  font-size: 15px;
-  color: #333;
+.event-tag {
+  background: #f0fdf4;
+  color: #166534;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  border: 1px solid #bbf7d0;
 }
 
-/* ======= BADGES DE STATUT ======= */
-td[ngStyle] {
-  font-weight: 700 !important;
-  text-transform: capitalize;
+.text-muted {
+  color: #94a3b8;
+  font-style: italic;
 }
 
-td[ngStyle][style*="green"] {
-  color: #0a8a27 !important;
-}
-
-td[ngStyle][style*="red"] {
-  color: #d60000 !important;
-}
-
-/* ======= TITRE DE L'ÉVÉNEMENT ======= */
-td span {
-  background: #eef4ff;
-  padding: 6px 14px;
-  border-radius: 8px;
-  color: #004aad;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* ======= LIGNES VIDES ======= */
-p {
-  font-size: 18px;
+/* Empty State */
+.empty-state {
   text-align: center;
-  color: #555;
-  margin-top: 25px;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--text-muted);
+  }
 }
 
-/* ======= BOUTON RETOUR ======= */
-.back-button-container {
-  margin-top: 30px;
+/* Actions */
+.actions {
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
 }
 
 .back-btn {
-  background: #004aad;
-  color: white;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 0.8rem 1.5rem;
+  background: white;
+  color: var(--text-color);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 74, 173, 0.3);
-  transition: 0.2s ease;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+
+  .icon {
+    font-size: 1.1rem;
+  }
 
   &:hover {
-    background: #003a8b;
+    background: #f8fafc;
+    border-color: #cbd5e1;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 74, 173, 0.4);
-  }
-
-  &:active {
-    transform: translateY(0);
   }
 }
 
-.back-icon {
-  font-size: 18px;
-  font-weight: bold;
+/* Animation */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
-/* ======= ANIMATION ======= */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* New Styles for Interactive Elements */
+.remove-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background: #ef4444;
+    color: white;
+  }
+}
+
+.delete-user-btn {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1.1rem;
+
+  &:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    transform: scale(1.1);
+  }
+}
+
+.actions-cell {
+  text-align: center;
 }

@@ -17,15 +17,8 @@
   <!-- COLONNE DE DROITE (topbar + contenu) -->
   <div class="main-layout">
 
-    <!-- TOP BAR -->
-    <header class="topbar fade-in">
-      <div class="avatar">{{ initials }}</div>
-
-      <div class="welcome-text">
-        <span class="small-text">Welcome back,</span>
-        <strong>{{ firstName }}</strong>
-      </div>
-    </header>
+    <!-- TOP BAR (Using Global Navbar) -->
+    <app-navbar></app-navbar>
 
     <!-- CONTENU -->
     <main class="content fade-in">
@@ -39,7 +32,7 @@
       <div class="stats-grid fade-in">
 
         <div class="stat-card">
-          <div class="stat-icon">📅</div>
+          <div class="stat-icon blue">📅</div>
           <div>
             <h3>{{ totalEvents }}</h3>
             <p>Événements créés</p>
@@ -47,7 +40,7 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon">👥</div>
+          <div class="stat-icon green">👥</div>
           <div>
             <h3>{{ totalParticipants }}</h3>
             <p>Participants inscrits</p>
@@ -55,7 +48,7 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon">🧑‍💼</div>
+          <div class="stat-icon purple">🧑‍💼</div>
           <div>
             <h3>{{ totalUsers }}</h3>
             <p>Utilisateurs ajoutés</p>
@@ -63,7 +56,7 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon">📊</div>
+          <div class="stat-icon orange">📊</div>
           <div>
             <h3>{{ totalRegistrations }}</h3>
             <p>Inscriptions aux événements</p>

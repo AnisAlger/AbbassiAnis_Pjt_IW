@@ -1,61 +1,41 @@
-<h2>Liste des événements disponibles</h2>
-<table border="1" cellpadding="8">
-  <thead>
-    <tr>
-      <th>Image</th>
-      <th>Titre</th>
-      <th>Description</th>
-      <th>Date</th>
-      <th>Lieu</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let e of events">
-      <td>
-        <div class="event-image-container">
-          <img *ngIf="e.imageUrl" [src]="'http://localhost:3001' + e.imageUrl" alt="Image">
-          <div *ngIf="!e.imageUrl" class="placeholder">No Image</div>
-        </div>
-      </td>
-      <td>{{ e.title }}</td>
-      <td>{{ e.description }}</td>
-      <td>{{ e.date | date:'shortDate' }}</td>
-      <td>{{ e.location }}</td>
-      <td>
-        <button (click)="affect(e.id)">S’inscrire</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<app-navbar></app-navbar>
 
-<h2>Mes inscriptions</h2>
-<table *ngIf="myRegistrations.length > 0" border="1" cellpadding="8">
-  <thead>
-    <tr>
-      <th>Événement</th>
-      <th>Image</th>
-      <th>Nom et Prénom</th>
-      <th>Email</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let r of myRegistrations">
-      <td>{{ getEventTitle(r.eventId) }}</td>
-      <td>
-        <div class="event-image-container">
-          <img *ngIf="getEventImage(r.eventId)" [src]="'http://localhost:3001' + getEventImage(r.eventId)" alt="Image">
-          <div *ngIf="!getEventImage(r.eventId)" class="placeholder">No Image</div>
-        </div>
-      </td>
-      <td>{{ r.firstName }} {{ r.lastName }}</td>
-      <td>{{ r.email }}</td>
-      <td>
-        <button (click)="unsubscribe(r.id)">Se désinscrire</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="page-header">
+  <h2>🎉 Événements disponibles</h2>
+  <div class="search-container">
+    <span class="search-icon">🔍</span>
+    <input type="text" [(ngModel)]="searchTerm" (input)="filterEvents()"
+      placeholder="Rechercher un événement, un lieu, une date..." class="search-input">
+  </div>
+</div>
+
+<div class="event-grid">
+  <div class="event-card" *ngFor="let e of filteredEvents">
+    <div class="card-image">
+      <img *ngIf="e.imageUrl" [src]="'http://localhost:8080/api/uploads' + e.imageUrl.replace('/uploads', '')"
+        alt="Event Image">
+      <div *ngIf="!e.imageUrl" class="placeholder-image"><span>📷 Pas d'image</span></div>
+      <div class="card-date">
+        <span class="day">{{ e.date | date:'dd' }}</span>
+        <span class="month">{{ e.date | date:'MMM' }}</span>
+      </div>
+    </div>
+
+    <div class="card-content">
+      <h3>{{ e.title }}</h3>
+      <p class="description">{{ e.description }}</p>
+
+      <div class="meta-info">
+        <span>📍 {{ e.location }}</span>
+      </div>
+
+      <button class="btn btn-primary full-width" (click)="affect(e.id)">
+        S'inscrire à l'événement
+      </button>
+    </div>
+  </div>
+</div>
+
+
 
 <button class="logout-btn" (click)="logout()"> Déconnexion</button>

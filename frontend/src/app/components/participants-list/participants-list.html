@@ -1,52 +1,79 @@
-<h2>Liste des utilisateurs de type participant</h2>
+<app-navbar></app-navbar>
 
-<table *ngIf="participants.length > 0" border="1" cellpadding="8">
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Prénom</th>
-      <th>Email</th>
-      <th>Rôle</th>
-      <th>ID</th>
-      <th>Statut</th>
-      <th>Événement inscrit</th>   <!-- 👈 NOUVELLE COLONNE -->
-    </tr>
-  </thead>
+<div class="page-container fade-in">
 
-  <tbody>
-    <tr *ngFor="let p of participants">
-      <td>{{ p.lastName }}</td>
-      <td>{{ p.firstName }}</td>
-      <td>{{ p.email }}</td>
-      <td>{{ p.role }}</td>
-      <td>{{ p.id }}</td>
+  <div class="header-section">
+    <h2>Liste des Participants</h2>
+    <p class="subtitle">Gérez les utilisateurs inscrits à vos événements</p>
+  </div>
 
-      <td [ngStyle]="{ color: p.status === 'inscrit' ? 'green' : 'red' }">
-        {{ p.status }}
-      </td>
+  <div class="table-container" *ngIf="participants.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Nom complet</th>
+          <th>Email</th>
+          <th>Rôle</th>
+          <th>ID</th>
+          <th>Statut</th>
+          <th>Événement(s)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
 
-      <!-- ✔ SI INSCRIT → AFFICHER TITRE DE L'ÉVÉNEMENT -->
-      <td>
-        <span *ngIf="p.status === 'inscrit'; else aucun">
-          {{ p.eventTitle }}
-        </span>
+      <tbody>
+        <tr *ngFor="let p of participants">
+          <td class="user-info">
+            <div class="avatar-circle">{{ p.firstName.charAt(0) }}{{ p.lastName.charAt(0) }}</div>
+            <div>
+              <span class="name">{{ p.firstName }} {{ p.lastName }}</span>
+            </div>
+          </td>
+          <td>{{ p.email }}</td>
+          <td>
+            <span class="role-badge" [ngClass]="{'organizer': p.role === 'ORGANIZER', 'user': p.role === 'USER'}">
+              {{ p.role }}
+            </span>
+          </td>
+          <td class="id-cell">{{ p.id }}</td>
 
-        <ng-template #aucun>
-          -
-        </ng-template>
-      </td>
+          <td>
+            <span class="status-badge" [ngClass]="p.status === 'inscrit' ? 'active' : 'inactive'">
+              {{ p.status }}
+            </span>
+          </td>
 
-    </tr>
-  </tbody>
-</table>
+          <td>
+            <div *ngIf="p.registrations && p.registrations.length > 0; else aucun" class="event-tags">
+              <span *ngFor="let reg of p.registrations" class="event-tag">
+                {{ reg.title }}
+                <span class="remove-tag" (click)="unregister(reg.id)" title="Désinscrire">×</span>
+              </span>
+            </div>
+            <ng-template #aucun><span class="text-muted">-</span></ng-template>
+          </td>
 
-<div class="back-button-container">
+          <td class="actions-cell">
+            <button class="delete-user-btn" (click)="deleteUser(p.id)" title="Supprimer l'utilisateur">
+              🗑️
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="empty-state" *ngIf="participants.length === 0">
+    <div class="empty-icon">👥</div>
+    <h3>Aucun participant trouvé</h3>
+    <p>Il n'y a pas encore d'utilisateurs inscrits avec le rôle participant.</p>
+  </div>
+
+  <div class="actions">
     <button class="back-btn" routerLink="/dashboard-organizer">
-      <span class="back-icon">←</span>
-      Retour au dashboard
+      <span class="icon">⬅</span> Retour au tableau de bord
     </button>
-</div>
+  </div>
 
-<p *ngIf="participants.length === 0">
-  Aucun utilisateur de type participant trouvé.
-</p>
+</div>

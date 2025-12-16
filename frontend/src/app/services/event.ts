@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
-  private apiUrl = 'http://localhost:3001/events';
+  private apiUrl = 'http://localhost:8080/api/events';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createWithImage(eventData: FormData): Observable<any> {
     const token = localStorage.getItem('token');
@@ -38,9 +38,9 @@ export class EventService {
   }
 
   updateWithImage(eventId: string, eventData: FormData): Observable<any> {
-  const token = localStorage.getItem('token');
-  const headers = { Authorization: `Bearer ${token}` };
-  return this.http.put(`${this.apiUrl}/${eventId}`, eventData, { headers });
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.put(`${this.apiUrl}/${eventId}`, eventData, { headers });
   }
 
 

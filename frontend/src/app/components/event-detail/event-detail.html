@@ -36,11 +36,8 @@
 
       <!-- Image uniforme -->
       <div *ngIf="event.imageUrl" class="event-image-container">
-        <img 
-          [src]="'http://localhost:3001' + event.imageUrl" 
-          alt="Image de l'événement" 
-          class="event-image"
-        >
+        <img [src]="'http://localhost:8080/api/uploads' + event.imageUrl.replace('/uploads', '')"
+          alt="Image de l'événement" class="event-image">
       </div>
 
       <p class="event-description">{{ event.description }}</p>

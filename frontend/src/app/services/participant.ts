@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ParticipantService {
-  
-  private apiUrl = 'http://localhost:3001/participants';
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:8080/api/participants';
+
+  constructor(private http: HttpClient) { }
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token') || '';
@@ -26,7 +26,7 @@ export class ParticipantService {
   }
 
   getAllUsersParticipants(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3001/users/participants', { headers: this.getAuthHeaders() });
+    return this.http.get<any[]>('http://localhost:8080/api/users/participants', { headers: this.getAuthHeaders() });
   }
 
   // ✔ Ajout de eventTitle

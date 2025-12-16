@@ -38,12 +38,9 @@ import { NavbarComponent } from './components/navbar/navbar';
     EventForm,
     ParticipantsList,
     DashboardParticipant,
-    
+
   ],
-  template: `
-    <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
-export class App {}
+export class App { }

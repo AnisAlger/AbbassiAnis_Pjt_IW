@@ -13,6 +13,7 @@ import { OrganizerDashboard } from './app/components/organizer/organizer-dashboa
 import { ParticipantsList } from './app/components/participants-list/participants-list';
 import { DashboardParticipant } from './app/components/participant/dashboard-participant';
 import { NavbarComponent } from './app/components/navbar/navbar';
+import { MyRegistrations } from './app/components/my-registrations/my-registrations';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'event-form', component: EventForm },
 
   { path: 'participants', component: ParticipantsList },
+  { path: 'my-registrations', component: MyRegistrations },
   { path: 'navbar', component: NavbarComponent },
 
   { path: 'dashboard-organizer', component: OrganizerDashboard },

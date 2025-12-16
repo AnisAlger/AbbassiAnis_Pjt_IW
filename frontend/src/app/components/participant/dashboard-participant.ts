@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { EventService } from '../../services/event';
 import { ParticipantService } from '../../services/participant';
 import { RouterOutlet, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../navbar/navbar';
 
 @Component({
   selector: 'app-dashboard-participant',
@@ -11,7 +13,10 @@ import { RouterOutlet, Router, RouterLink, RouterLinkActive } from '@angular/rou
     CommonModule,
     RouterOutlet,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    RouterLinkActive,
+    FormsModule,
+    NavbarComponent
   ],
   templateUrl: './dashboard-participant.html',
   styleUrls: ['./dashboard-participant.scss']
@@ -21,12 +26,14 @@ export class DashboardParticipant implements OnInit {
   events: any[] = [];
   myRegistrations: any[] = [];
   userId: string = '';
+  filteredEvents: any[] = [];
+  searchTerm: string = '';
 
   constructor(
     private eventService: EventService,
     private participantService: ParticipantService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.userId = localStorage.getItem('userId') || '';
@@ -34,7 +41,10 @@ export class DashboardParticipant implements OnInit {
     if (!this.userId) return console.error('Utilisateur non connecté');
 
     this.eventService.getAll().subscribe({
-      next: data => this.events = data,
+      next: data => {
+        this.events = data;
+        this.filteredEvents = data;
+      },
       error: err => console.error('Erreur chargement événements:', err)
     });
 
@@ -42,6 +52,19 @@ export class DashboardParticipant implements OnInit {
       next: data => this.myRegistrations = data,
       error: err => console.error('Erreur chargement inscriptions:', err)
     });
+  }
+
+  filterEvents() {
+    if (!this.searchTerm) {
+      this.filteredEvents = this.events;
+    } else {
+      const lowerTerm = this.searchTerm.toLowerCase();
+      this.filteredEvents = this.events.filter(e =>
+        e.title.toLowerCase().includes(lowerTerm) ||
+        e.location.toLowerCase().includes(lowerTerm) ||
+        (e.date && e.date.includes(lowerTerm))
+      );
+    }
   }
 
   // Inscription

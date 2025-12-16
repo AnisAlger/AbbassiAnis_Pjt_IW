@@ -12,9 +12,9 @@ export interface Notification {
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
-  private apiUrl = 'http://localhost:3001/notifications';
+  private apiUrl = 'http://localhost:8080/api/notifications';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getMyNotifications(): Observable<Notification[]> {
     const token = localStorage.getItem('token');
@@ -23,10 +23,10 @@ export class NotificationService {
   }
 
   markAsRead(notificationId: string) {
-  const token = localStorage.getItem('token') || '';
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.put(`${this.apiUrl}/${notificationId}/read`, {}, { headers });
-}
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.apiUrl}/${notificationId}/read`, {}, { headers });
+  }
 
 
 }

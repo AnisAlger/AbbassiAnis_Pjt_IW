@@ -1,26 +1,57 @@
 <div class="navbar" *ngIf="showNavbar">
-  
-  <!-- Icône Notifications à GAUCHE -->
-  <div class="notif-icon" (click)="showList = !showList">
-    🔔
-    <span *ngIf="unreadCount > 0" class="notif-count">{{ unreadCount }}</span>
+
+  <!-- Navigation Menu (Participants ONLY) -->
+  <div class="nav-menu" *ngIf="!isOrganizer">
+    <ul class="nav-links">
+      <li><a routerLink="/dashboard-participant" routerLinkActive="active">Événements</a></li>
+      <li><a routerLink="/my-registrations" routerLinkActive="active">Mes Inscriptions</a></li>
+    </ul>
   </div>
 
-  <!-- Espace restant pour d'autres éléments si nécessaire -->
-  <div class="navbar-content">
-    <!-- Vos autres éléments de navbar ici -->
-  </div>
+  <!-- Right Side: Interaction Elements -->
 
-  <!-- Liste des notifications (reste à droite de l'icône) -->
-  <div class="notif-list" *ngIf="showList">
-    <p
-      *ngFor="let n of notifications"
-      [class.unread]="!n.read"
-      (click)="markAsRead(n)"
-    >
-      {{ n.message }} <br>
-      <small>{{ n.createdAt | date:'short' }}</small>
-    </p>
-  </div>
+  <!-- Notification Dropdown Container -->
+  <div class="notif-container">
 
+    <!-- Transparent Backdrop to close menu when clicking outside -->
+    <div class="backdrop" *ngIf="showList" (click)="showList = false"></div>
+
+    <!-- Bell Icon Wrapper -->
+    <div class="notif-icon-wrapper" (click)="toggleList($event)">
+      <span class="bell-icon">🔔</span>
+      <span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount }}</span>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="notif-dropdown" *ngIf="showList" (click)="$event.stopPropagation()">
+
+      <!-- Header -->
+      <div class="dropdown-header">
+        <h3>Notifications</h3>
+        <!-- Optional: Add functionality to mark all later -->
+        <!-- <span class="mark-all-btn">Mark all as read</span> -->
+      </div>
+
+      <!-- Scrollable List -->
+      <div class="notif-list-content">
+
+        <!-- List Items -->
+        <div *ngFor="let n of notifications" class="notif-item" [class.unread]="!n.read" (click)="markAsRead(n)">
+          <div class="item-icon">
+            💬
+          </div>
+          <div class="notif-text">{{ n.message }}</div>
+          <div class="notif-time">{{ n.createdAt | date:'MMM d, h:mm a' }}</div>
+          <div class="indicator-new" *ngIf="!n.read"></div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="notifications.length === 0">
+        <i>🔕</i>
+        <span>Aucune notification pour le moment</span>
+      </div>
+
+    </div>
+  </div>
 </div>
