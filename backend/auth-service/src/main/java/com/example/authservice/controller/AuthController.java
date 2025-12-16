@@ -19,13 +19,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User payload) {
-        // payload might have "passwordHash" or similar, usually client sends "password"
-        // reusing User model where passwordHash is used for storage.
-        // Assuming client sends "passwordHash" field OR we just accept "password" in a
-        // DTO.
-        // For simplicity reusing User directly but treating passwordHash as input
-        // password
-
+        
         String pass = payload.getPasswordHash();
 
         User u = authService.register(
